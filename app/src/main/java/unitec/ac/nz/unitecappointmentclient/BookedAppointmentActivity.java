@@ -158,9 +158,15 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
                 if (response == null || response.getString("result").compareToIgnoreCase("error") == 0) {
                     toast = Toast.makeText(BookedAppointmentActivity.this, "Problem communicating with server", Toast.LENGTH_LONG);
                 } else {
-                    if (response.getString("result").compareToIgnoreCase("true") == 0) {
+                    if (response.getString("result").compareToIgnoreCase("true") == 0 ||
+                            response.getString("result").compareToIgnoreCase("booked") == 0 ) {
                         bookedAppointments.remove(position);
                         bookedAppointmentAdapter.notifyDataSetChanged();
+
+                        if (response.getString("result").compareToIgnoreCase("booked") == 0 ) {
+                            toast = Toast.makeText(BookedAppointmentActivity.this, "This appointment has been booked", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
 
                         if (bookedAppointments.isEmpty()) {
                             Intent intent = new Intent(BookedAppointmentActivity.this, MainStudentActivity.class);
