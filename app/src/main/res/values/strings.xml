@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Unitec Appointment Client</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="dialog_message">Do you wish to cancel this appointment ?</string>
+    <string name="dialog_title">Cancel Appointment</string>
+</resources>
