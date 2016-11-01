@@ -8,7 +8,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="unitec.ac.nz.unitecappointmentclient.CreateAppointmentActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:baselineAligned="true"
+    android:background="@drawable/photo"
+    android:id="@+id/background">
 
     <TextView
         android:layout_width="wrap_content"
@@ -127,12 +130,15 @@
         android:inputType="number" />
 
     <Button
+        android:background="@drawable/btn_dark_green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Make Appointment"
         android:id="@+id/btnCreateAppointment" />
 
     <Button
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_dark_green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancel"

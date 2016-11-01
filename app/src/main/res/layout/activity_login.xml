@@ -7,7 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/photo"
     android:orientation="vertical"
+    android:fillViewport="true"
     tools:context="unitec.ac.nz.unitecappointmentclient.LoginActivity"
     android:gravity="center_vertical">
 
@@ -28,9 +30,10 @@
         android:hint="password" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="202dp"
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/btnLogin"
+        android:background="@drawable/btn_dark_green"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

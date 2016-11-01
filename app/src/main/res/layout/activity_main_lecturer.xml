@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/photo"
     tools:context="unitec.ac.nz.unitecappointmentclient.MainLecturerActivity">
 
     <TextView
@@ -40,6 +41,7 @@
         android:layout_alignEnd="@+id/lblName" />
 
     <Button
+        android:background="@drawable/btn_dark_green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Appointment"
@@ -51,6 +53,8 @@
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_dark_green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
@@ -62,6 +66,8 @@
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_dark_green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Appointment"

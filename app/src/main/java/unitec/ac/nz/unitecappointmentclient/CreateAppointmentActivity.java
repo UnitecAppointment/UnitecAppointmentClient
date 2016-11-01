@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -38,6 +39,8 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_appointment);
+
+        ((LinearLayout) findViewById(R.id.background)).getBackground().setAlpha(127);
 
         txtDay = (EditText) findViewById(R.id.txtDay);
         txtMonth = (EditText) findViewById(R.id.txtMonth);
