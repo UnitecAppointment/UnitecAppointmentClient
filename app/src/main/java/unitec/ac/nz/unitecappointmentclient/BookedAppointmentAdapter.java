@@ -10,7 +10,10 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by zezo on 8/10/16.
+ * A view adapter class to customize the list view for displaying booked appointments
+ *
+ * @author      Marzouq Almarzooq (1380949)
+ * @author      Nawaf Altuwayjiri (1377387)
  */
 public class BookedAppointmentAdapter extends ArrayAdapter<BookedAppointmentModel> {
     public BookedAppointmentAdapter(Context context, List<BookedAppointmentModel> bookedAppointments) {
