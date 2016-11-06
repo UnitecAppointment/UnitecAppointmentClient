@@ -22,27 +22,43 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Booked appointment activity, used by students and lecturers, and responsible for displaying booked
+ * appointments for a specific user, and selecting booked appointments for cancelling
+ *
+ * @author      Marzouq Almarzooq (1380949)
+ * @author      Nawaf Altuwayjiri (1377387)
+ */
 public class BookedAppointmentActivity extends AppCompatActivity implements OnClickListener,
         OnItemClickListener {
 
-    private ListView lstBookedAppointments;
-    private Button btnMenu;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String title;
-    private String department;
-    private String type;
-    private List<BookedAppointmentModel> bookedAppointments;
-    private int position;
-    private BookedAppointmentAdapter bookedAppointmentAdapter;
+    private ListView lstBookedAppointments;                         // list view for displaying all booked appointments
+    private Button btnMenu;                                         // button for going back to main menu
+    private String username;                                        // username
+    private String firstName;                                       // user first name
+    private String lastName;                                        // user last name
+    private String title;                                           // user title (applicable to lecturer user only)
+    private String department;                                      // user department (applicable to lecturer user only)
+    private String type;                                            // user type (lecturer or student)
+    private List<BookedAppointmentModel> bookedAppointments;        // booked appointment data model collection
+    private int position;                                           // index of selected item in list view
+    private BookedAppointmentAdapter bookedAppointmentAdapter;      // adapter to customize booked appointment list view
 
+    /**
+     * Create and initialise the booked appointment activity view
+     *
+     * @param savedInstanceState           any state information persisted from activity's previous life cycle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // call ancestor constructor for proper initialisation, assign the respective layout for
+        // this activity's view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booked_appointments);
 
+        // obtain intent passed from previous activity
         Intent intent = getIntent();
+        // obtain extra information passed from previous activity via intent
         firstName = intent.getStringExtra("firstName");
         lastName = intent.getStringExtra("lastName");
         username = intent.getStringExtra("username");
@@ -51,18 +67,30 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
             title = intent.getStringExtra("title");
             department = intent.getStringExtra("department");
         }
+        // create list view adapter from booked appointment data model passed via intent, then pass
+        // adapter to customize and populate the list view
         bookedAppointments = (ArrayList<BookedAppointmentModel>) intent.getSerializableExtra("bookedAppointments");
         bookedAppointmentAdapter = new BookedAppointmentAdapter(this, bookedAppointments);
         lstBookedAppointments = (ListView) findViewById(R.id.lstBookedAppointments);
         lstBookedAppointments.setAdapter(bookedAppointmentAdapter);
+        // attach listener to handle list view item selection touch events
         lstBookedAppointments.setOnItemClickListener(this);
         btnMenu = (Button) findViewById(R.id.btnMenu1);
+        // obtain button used to go back to the previous main menu view, and assign listener
+        // to handle button touch events
         btnMenu.setOnClickListener(this);
     }
 
+    /**
+     * Call back handler for events arising from touch click event listener
+     *
+     * @param v           view responsible for raising the touch click evevnt
+     */
     @Override
     public void onClick(View v) {
+        // if touch click event was raised by back to main menu activity
         if (v == btnMenu) {
+            // pass appropriate information according to user type to initialize starting activity
             if (type.compareTo("student") == 0) {
                 Intent intent = new Intent(BookedAppointmentActivity.this, MainStudentActivity.class);
                 intent.putExtra("username", username);
@@ -83,9 +111,17 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
         }
     }
 
+    /**
+     * Call back handler for events arising from touch click event list view listener
+     *
+     * @param parent           parent adapted list view
+     * @param view             list item view responsible for touch click event
+     * @param position         position of list item view
+     * @param id               unique id for list item
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        this.position = position;
+        this.position = position; // tracks selected list view item index used by anonymous dialog box class
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Add the buttons
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
