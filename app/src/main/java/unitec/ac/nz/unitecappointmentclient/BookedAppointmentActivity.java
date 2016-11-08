@@ -84,7 +84,7 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
     /**
      * Call back handler for events arising from touch click event listener
      *
-     * @param v           view responsible for raising the touch click evevnt
+     * @param v           view responsible for raising the touch click event
      */
     @Override
     public void onClick(View v) {
@@ -99,6 +99,7 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
                 intent.putExtra("type", "student");
                 startActivity(intent);
             } else {
+                //pass information back to previous activity
                 Intent intent = new Intent(BookedAppointmentActivity.this, MainLecturerActivity.class);
                 intent.putExtra("username", username);
                 intent.putExtra("firstName", firstName);
@@ -161,49 +162,79 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
         dialog.show();
     }
 
+    /**
+     * Private helper class to handle asynchronous web service call for cancelling appointments
+     *
+     * @author      Marzouq Almarzooq (1380949)
+     * @author      Nawaf Altuwayjiri (1377387)
+     */
     private class AsyncCancelAppointmentTask extends AsyncTask<Void, Void, Void> {
 
-        private JSONObject appointmentDetails;
-        private ProgressDialog progressDialog;
-        private JSONObject response;
+        private JSONObject appointmentDetails;          // Json object with appointment cancellation details
+        private ProgressDialog progressDialog;          // dialog for progress of web service call
+        private JSONObject response;                    // web service response Json object
 
+        /**
+         * Constructor for asynchronous task
+         *
+         * @param appointmentDetails           Json object with appointment cancellation details
+         */
         public AsyncCancelAppointmentTask(JSONObject appointmentDetails) {
+            // initialise task object attributes
             this.appointmentDetails = appointmentDetails;
             progressDialog = new ProgressDialog(BookedAppointmentActivity.this);
         }
 
+        /**
+         * Call back handler called prior to asynchronous task execution
+         **/
         @Override
         protected void onPreExecute() {
             progressDialog.setMessage("Please wait...");
             progressDialog.show();
         }
 
+        /**
+         * Asynchronous task execution
+         *
+         * @param params    //extra parameters can be optionally passed
+         **/
         @Override
         protected Void doInBackground(Void... params) {
+            // make web service call passing appointment details json object, and obtain
+            // response back from web service call
             response = WebService.invokeWebService(WebService.CANCEL_APPOINTMENT_METHOD,
                     WebService.CANCEL_APPOINTMENT_PARAMETER, appointmentDetails);
             return null;
         }
 
+        /**
+         * Call back handler called after asynchronous task execution is complete
+         *
+         * @param arg       //optional arguments passed from asynchronous task completion
+         **/
         @Override
         protected void onPostExecute(Void arg) {
+            // close progress dialog
             progressDialog.dismiss();
             Toast toast = null;
-
             try {
+                // Json response object availability and result
                 if (response == null || response.getString("result").compareToIgnoreCase("error") == 0) {
+                    // if unavailable or error result then problem occurred at web server
                     toast = Toast.makeText(BookedAppointmentActivity.this, "Problem communicating with server", Toast.LENGTH_LONG);
                 } else {
+                    // successful response result
                     if (response.getString("result").compareToIgnoreCase("true") == 0 ||
                             response.getString("result").compareToIgnoreCase("booked") == 0 ) {
                         bookedAppointments.remove(position);
                         bookedAppointmentAdapter.notifyDataSetChanged();
-
+                        //appointment already booked
                         if (response.getString("result").compareToIgnoreCase("booked") == 0 ) {
                             toast = Toast.makeText(BookedAppointmentActivity.this, "This appointment has been booked", Toast.LENGTH_LONG);
                             toast.show();
                         }
-
+                        //no available appointments
                         if (bookedAppointments.isEmpty()) {
                             Intent intent = new Intent(BookedAppointmentActivity.this, MainStudentActivity.class);
                             intent.putExtra("username", username);
@@ -212,11 +243,13 @@ public class BookedAppointmentActivity extends AppCompatActivity implements OnCl
                             startActivity(intent);
                         }
                     } else {
+                        //no lecturers to make appointments with
                         toast = Toast.makeText(BookedAppointmentActivity.this, "No Assigned Lecturers", Toast.LENGTH_LONG);
                     }
                 }
 
             } catch (JSONException e) {
+                //invalid json response
                 e.printStackTrace();
                 toast = Toast.makeText(BookedAppointmentActivity.this, "Problem communicating with server", Toast.LENGTH_LONG);
             }

@@ -50,7 +50,7 @@ public class AppointmentModel implements Serializable {
     }
 
     /**
-     * String representaion of an appointment data model
+     * String representation of an appointment data model
      *
      * @return string containing appointment details
      */

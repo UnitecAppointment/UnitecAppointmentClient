@@ -21,7 +21,7 @@ public class AppointmentAdapter extends ArrayAdapter<AppointmentModel> {
      * Constructor for the adapter class
      *
      * @param context           context from parent display
-     * @param appointments      collection of available to populate the adapted list view
+     * @param appointments      collection of available appointments to populate the adapted list view
      */
     public AppointmentAdapter(Context context, List<AppointmentModel> appointments) {
         super(context, 0, appointments);

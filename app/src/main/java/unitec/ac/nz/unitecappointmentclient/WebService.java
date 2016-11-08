@@ -22,8 +22,15 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
 
+/**
+ * Class for making web service calls and obtaining results to and from web-server
+ *
+ * @author      Marzouq Almarzooq (1380949)
+ * @author      Nawaf Altuwayjiri (1377387)
+ */
 public class WebService {
 
+    //services available form web server
     public static String LOGIN_METHOD = "login";
     public static String LOGIN_PARAMETER = "userLoginDetails";
     public static String CREATE_APPOINTMENT_METHOD = "createAppointment";
@@ -46,6 +53,13 @@ public class WebService {
     //SOAP Action URI again Namespace + Web method name
     private static String SOAP_ACTION = "http://unitecappointmentserver/AppointementServices/";
 
+    /**
+     * Create and initialise the activity view
+     *
+     * @param methodName           web service name
+     * @param parameterName        web service parameter name
+     * @param data                 parameter data
+     */
     public static JSONObject invokeWebService(String methodName, String parameterName, JSONObject data) {
 
         JSONObject result = null;
@@ -87,6 +101,12 @@ public class WebService {
         return result;
     }
 
+    /**
+     * private class for application certificate trust manager, defined to trust all certificates
+     *
+     * @author      Marzouq Almarzooq (1380949)
+     * @author      Nawaf Altuwayjiri (1377387)
+     */
     private static class SSLConection {
 
         private static TrustManager[] trustManagers;
@@ -112,8 +132,10 @@ public class WebService {
 
         }
 
+        /**
+         * Allows self-signed certifcates to be accepted
+         */
         public static void allowAllSSL() {
-
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
@@ -122,11 +144,9 @@ public class WebService {
             });
 
             SSLContext context;
-
             if (trustManagers == null) {
                 trustManagers = new TrustManager[]{new TrustManager()};
             }
-
             try {
                 context = SSLContext.getInstance("TLS");
                 context.init(null, trustManagers, new SecureRandom());

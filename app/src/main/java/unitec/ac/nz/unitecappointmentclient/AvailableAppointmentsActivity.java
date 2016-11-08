@@ -70,6 +70,7 @@ public class AvailableAppointmentsActivity extends AppCompatActivity implements 
         // obtain button used to go back to the previous lecturer list view, and assign listener
         // to handle button touch events
         btnLecturers = (Button) findViewById(R.id.btnLecturers);
+        // attach listener to handle button selection touch events
         btnLecturers.setOnClickListener(this);
     }
 
@@ -176,7 +177,6 @@ public class AvailableAppointmentsActivity extends AppCompatActivity implements 
             // close progress dialog
             progressDialog.dismiss();
             Toast toast = null;
-
             try {
                 // Json response object availability and result
                 if (response == null || response.getString("result").compareToIgnoreCase("error") == 0) {
@@ -200,6 +200,7 @@ public class AvailableAppointmentsActivity extends AppCompatActivity implements 
                 }
 
             } catch (JSONException e) {
+                //invalid json response
                 e.printStackTrace();
                 toast = Toast.makeText(AvailableAppointmentsActivity.this, "Problem communicating with server", Toast.LENGTH_LONG);
             }
